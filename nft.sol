@@ -47,14 +47,14 @@ contract Nft is Context, ERC165, IERC721, IERC721Metadata{
 
     
     function balanceOf(address owner) public view virtual override returns (uint256) {
-        require(owner != address(0), "ERC721: balance query for the zero address");
+        require(owner != address(0), "NFT: balance query for the zero address");
         return _balances[owner];
     }
 
     
     function ownerOf(uint256 tokenId) public view virtual override returns (address) {
         address owner = _owners[tokenId];
-        require(owner != address(0), "ERC721: owner query for nonexistent token");
+        require(owner != address(0), "NFT: owner query for nonexistent token");
         return owner;
     }
 
@@ -84,11 +84,11 @@ contract Nft is Context, ERC165, IERC721, IERC721Metadata{
     
     function approve(address to, uint256 tokenId) public virtual override {
         address owner = Nft.ownerOf(tokenId);
-        require(to != owner, "ERC721: approval to current owner");
+        require(to != owner, "NFT approval to current owner");
 
         require(
             _msgSender() == owner || isApprovedForAll(owner, _msgSender()),
-            "ERC721: approve caller is not owner nor approved for all"
+            "NFT: approve caller is not owner nor approved for all"
         );
 
         _approve(to, tokenId);
@@ -96,14 +96,14 @@ contract Nft is Context, ERC165, IERC721, IERC721Metadata{
 
     
     function getApproved(uint256 tokenId) public view virtual override returns (address) {
-        require(_exists(tokenId), "ERC721: approved query for nonexistent token");
+        require(_exists(tokenId), "NFT: approved query for nonexistent token");
 
         return _tokenApprovals[tokenId];
     }
 
     
     function setApprovalForAll(address operator, bool approved) public virtual override {
-        require(operator != _msgSender(), "ERC721: approve to caller");
+        require(operator != _msgSender(), "NFT: approve to caller");
 
         _operatorApprovals[_msgSender()][operator] = approved;
         emit ApprovalForAll(_msgSender(), operator, approved);
@@ -120,7 +120,7 @@ contract Nft is Context, ERC165, IERC721, IERC721Metadata{
         address to,
         uint256 tokenId
     ) public virtual override {
-        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: transfer caller is not owner nor approved");
+        require(_isApprovedOrOwner(_msgSender(), tokenId), "NFT: transfer caller is not owner nor approved");
 
         _transfer(from, to, tokenId);
     }
